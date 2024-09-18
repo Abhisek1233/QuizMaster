@@ -1,0 +1,180 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+/* Header Styling */
+header {
+    padding: 20px;
+    background-color: #fff;
+    position: relative;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Flexbox for Logo on Both Sides of Institute Name */
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-left img,
+.logo-right img {
+    max-width: 80px; /* Adjust the size of the logos */
+}
+
+header h1 {
+    color: #FF6A00;
+    margin: 0;
+    font-size: 28px;
+    white-space: nowrap; /* Prevent text wrapping */
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* Make the "Affiliated to Utkal University" text blue and in h6 */
+.affiliation {
+    color: blue;
+    text-align: center;
+    margin: 0;
+    font-size: 18px;
+}
+
+/* Center LIT Quiz Application and Applicant’s Name in the same row */
+.application-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.app-title {
+    color: #72a7e3;
+    font-size: 28px;
+    text-shadow: 2px 2px 5px pink;
+    margin: 0 20px 0 0;
+}
+
+/* Align "Applicant’s Name" next to the heading */
+.applicant-name {
+    border: 2px solid green;
+    padding: 10px;
+    color: black;
+    display: inline-block;
+}
+
+/* Navigation Styling */
+nav {
+    text-align: center;
+    margin-top: 20px;
+    background-color: #FF6347;
+}
+
+nav a {
+    text-decoration: none;
+    padding: 10px 20px;
+    color: white;
+    font-weight: bold;
+    margin: 0 10px;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+nav a:hover {
+    background-color: #FF4500;
+    transform: scale(1.05);
+}
+
+/* Quiz Section */
+#quizSection {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+#subjectTitle {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#quizContent {
+    margin-top: 20px;
+}
+
+.quiz-question {
+    margin-bottom: 20px;
+    text-align: left; /* Align question text to the left */
+}
+
+.quiz-option {
+    display: block;
+    margin: 10px 0;
+}
+
+.quiz-option input {
+    margin-right: 10px;
+}
+
+.quiz-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #FF6A00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.quiz-button:hover {
+    background-color: #FF4500;
+    transform: scale(1.05);
+}
+
+/* Style the button container to align buttons horizontally */
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.nav-buttons button {
+    margin: 0 10px; /* Space between buttons */
+}
+
+/* Style for buttons */
+.quiz-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #FF4500;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.quiz-button:hover {
+    background-color: #FF4500;
+}
+
+
+/* Footer */
+footer {
+    text-align: center;
+    background-color: #002147;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}

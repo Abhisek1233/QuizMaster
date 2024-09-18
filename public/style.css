@@ -1,0 +1,127 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif; /* Modern, professional font */
+    background: linear-gradient(135deg, #fff7e6 0%, #f2500a 100%); /* Soft warm gradient */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+
+.login-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.login-container:hover {
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.15); /* Elevation on hover */
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #eee;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #ff9f1a;
+    box-shadow: 0 0 8px rgba(255, 159, 26, 0.2);
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: #ff9f1a;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #ff851a;
+    transform: translateY(-3px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+p {
+    margin-top: 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+a {
+    color: #ff9f1a;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #ff851a;
+}
+
+/* Forgot Password link */
+#forgot-password {
+    display: block;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #999;
+    transition: color 0.3s ease;
+}
+
+#forgot-password:hover {
+    color: #f97502;
+}
+
+

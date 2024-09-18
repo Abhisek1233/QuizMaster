@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="/styleH.css">
+    <link rel="icon" href="lit.jpg" sizes="48x48" type="image/jpg">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-left">
+                <img src="lit.jpg" alt="LIT Logo">
+            </div>
+            <h1>Lakshya Institute of Technology</h1>
+            <div class="logo-right">
+                <img src="lit.jpg" alt="LIT Logo">
+            </div>
+        </div>
+        <h6 class="affiliation">Affiliated to Utkal University</h6>
+        <div class="application-wrapper">
+            <h2 class="app-title">LIT Quiz Application</h2>
+            <div class="applicant-name">
+                Applicant’s Name: <span id="applicantName"><%= applicantName %></span>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="#" onclick="selectSubject('C Programming Quiz')">C Lang.</a>
+        <a href="#" onclick="selectSubject('C++ Programming Quiz')">C++ Lang.</a>
+        <a href="#" onclick="selectSubject('Java Programming Quiz')">Java Lang.</a>
+        <a href="#" onclick="selectSubject('Python Programming Quiz')">Python Lang.</a>
+    </nav>
+
+    <section id="quizSection">
+        <h3 id="subjectTitle">Select a subject to start the quiz.</h3>
+        <form id="quizForm" action="/submit-quiz" method="POST" onsubmit="return handleSubmit();">
+            <div id="quizContent">
+                <!-- Quiz questions will be dynamically inserted here. -->
+            </div>
+            <div class="nav-buttons">
+                <button type="button" id="prevButton" class="quiz-button" onclick="showPreviousQuestion()" style="display: none;">Previous</button>
+                <button type="button" id="nextButton" class="quiz-button" onclick="showNextQuestion()" style="display: none;">Next</button>
+                <button type="submit" id="submitButton" class="quiz-button" style="display: none;">Submit</button>
+            </div>
+        </form>
+        <div id="message" style="display: none; text-align: center; font-size: 18px; color: green; margin-top: 20px;"></div>
+    </section>
+
+    <footer>
+        <p>Designed & Developed By: Abhisek Behera, LIT, Bhubaneswar</p>
+    </footer>
+
+    <script>
+        const quizQuestions = {
+            "C Programming Quiz": [
+                { question: "Who is the father of C language?", options: ["Steve Jobs", "James Gosling", "Dennis Ritchie", "Rasmus Lerdorf"] },
+                { question: "Which of the following is not a valid C variable name?", options: ["int number;", "float rate;", "int variable_count;", "int $main;"] },
+                { question: "All keywords in C are in ____________", options: ["LowerCase letters", "UpperCase letters", "CamelCase letters", "None of the mentioned"] },
+                { question: "Which of the following is true for variable names in C?", options: ["They can contain alphanumeric characters as well as special characters", "It is not an error to declare a variable to be one of the keywords(like goto, static)", "Variable names cannot start with a digit", "Variable can be of any length"] },
+                { question: "Which is valid C expression?", options: ["int my_num = 100,000;", "int my_num = 100000;", "int my num = 1000;", "int $my_num = 10000;"] },
+                { question: "Which of the following cannot be a variable name in C?", options: ["volatile", "true", "friend", "export"] }
+            ],
+            "Python Programming Quiz": [
+                { question: "What will be the output of the following Python code? elements = [0, 1, 2] def incr(x): return x+1 print(list(map(elements, incr)))", options: ["[1, 2, 3]", "[0, 1, 2]", "error", "none of the mentioned"] },
+                { question: "What will be the output of the following Python code? elements = [0, 1, 2] def incr(x): return x+1 print(list(map(incr, elements)))", options: ["[1, 2, 3]", "[0, 1, 2]", "error", "none of the mentioned"] },
+                { question: "What will be the output of the following Python code? x = ['ab', 'cd'] print(list(map(upper, x)))", options: ["[‘AB’, ‘CD’]", "[‘ab’, ‘cd’]", "error", "none of the mentioned"] },
+                { question: "What will be the output of the following Python code? def to_upper(k): return k.upper() x = ['ab', 'cd'] print(list(map(upper, x)))", options: ["[‘AB’, ‘CD’]", "[‘ab’, ‘cd’]", "none of the mentioned", "error"] },
+                { question: "What will be the output of the following Python code? def to_upper(k): return k.upper() x = ['ab', 'cd'] print(list(map(to_upper, x)))", options: ["[‘AB’, ‘CD’]", "[‘ab’, ‘cd’]", "none of the mentioned", "error"] },
+                { question: "What will be the output of the following Python code? def to_upper(k): k.upper() x = ['ab', 'cd'] print(list(map(to_upper, x)))", options: ["[‘AB’, ‘CD’]", "[‘ab’, ‘cd’]", "none of the mentioned", "error"] }
+            ],
+            "Java Programming Quiz": [
+                { question: "Which one of the following is not an access modifier?", options: ["Public", "Private", "Protected", "Void"] },
+                { question: "All the variables of class should be ideally declared as?", options: ["private", "public", "protected", "default"] },
+                { question: "Which of the following modifier means a particular variable cannot be accessed within the package?", options: ["private", "public", "protected", "default"] },
+                { question: "How can a protected modifier be accessed?", options: ["accessible only within the class", "accessible only within package", "accessible within package and outside the package but through inheritance only", "accessible by all"] },
+                { question: "What happens if constructor of class A is made private?", options: ["Any class can instantiate objects of class A", "Objects of class A can be instantiated only within the class where it is declared", "Inherited class can instantiate objects of class A", "classes within the same package as class A can instantiate objects of class A"] },
+                { question: "All the variables of interface should be?", options: ["default and final", "default and static", "public, static and final", "protect, static and final"] }
+            ],
+            "C++ Programming Quiz": [
+                { question: "Which of the following is not a keyword in C++?", options: ["class", "interface", "goto", "enum"] },
+                { question: "Which of the following is used to define a function?", options: ["return", "void", "function", "define"] },
+                { question: "In C++ a constructor function is a special function that is automatically called when an object is created. What type of function is a constructor?", options: ["A member function", "A static function", "A non-static function", "None of the above"] },
+                { question: "What is the default access specifier for a member of a class in C++?", options: ["private", "public", "protected", "None of the above"] },
+                { question: "What is the size of `char` data type in C++?", options: ["1 byte", "2 bytes", "4 bytes", "8 bytes"] },
+                { question: "Which operator is used to allocate memory dynamically in C++?", options: ["new", "malloc", "calloc", "alloc"] }
+            ]
+        };
+
+        let currentSubject = null;
+        let currentQuestionIndex = 0;
+        let selectedAnswers = [];
+
+        function selectSubject(subject) {
+            currentSubject = subject;
+            currentQuestionIndex = 0;
+            selectedAnswers = [];
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const subjectTitle = document.getElementById('subjectTitle');
+            const quizContent = document.getElementById('quizContent');
+            const prevButton = document.getElementById('prevButton');
+            const nextButton = document.getElementById('nextButton');
+            const submitButton = document.getElementById('submitButton');
+
+            if (!currentSubject) {
+                subjectTitle.textContent = 'Select a subject to start the quiz.';
+                quizContent.innerHTML = '';
+                prevButton.style.display = 'none';
+                nextButton.style.display = 'none';
+                submitButton.style.display = 'none';
+                return;
+            }
+
+            const questions = quizQuestions[currentSubject];
+            if (currentQuestionIndex < questions.length) {
+                const question = questions[currentQuestionIndex];
+                const optionsHtml = question.options.map((option) => 
+                    `<label class="quiz-option">
+                        <input type="radio" name="question${currentQuestionIndex}" value="${option}">
+                        ${option}
+                    </label>`
+                ).join('');
+                
+                subjectTitle.textContent = currentSubject;
+                quizContent.innerHTML = `
+                    <div class="quiz-question">
+                        <p>${question.question}</p>
+                        ${optionsHtml}
+                    </div>
+                `;
+
+                prevButton.style.display = currentQuestionIndex > 0 ? 'block' : 'none';
+                nextButton.style.display = currentQuestionIndex < questions.length - 1 ? 'block' : 'none';
+                submitButton.style.display = currentQuestionIndex === questions.length - 1 ? 'block' : 'none';
+            } else {
+                prevButton.style.display = 'none';
+                nextButton.style.display = 'none';
+                submitButton.style.display = 'none';
+            }
+        }
+
+        function showNextQuestion() {
+            const selectedOption = document.querySelector(`input[name="question${currentQuestionIndex}"]:checked`);
+            if (selectedOption) {
+                selectedAnswers[currentQuestionIndex] = selectedOption.value;
+                currentQuestionIndex++;
+                displayQuestion();
+            }
+        }
+
+        function showPreviousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+            }
+        }
+
+        function handleSubmit() {
+            // Prevent the default form submission
+            event.preventDefault();
+
+            // Show the success message
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = 'Successfully submitted!';
+            messageDiv.style.display = 'block';
+
+            // Hide the form (optional)
+            const quizForm = document.getElementById('quizForm');
+            quizForm.style.display = 'none';
+
+            return false; // Prevent the form from actually submitting
+        }
+
+        // Initial state
+        document.getElementById('prevButton').style.display = 'none';
+        document.getElementById('nextButton').style.display = 'none';
+        document.getElementById('submitButton').style.display = 'none';
+    </script>
+</body>
+</html>

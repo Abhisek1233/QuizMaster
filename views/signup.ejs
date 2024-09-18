@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="styleS.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="lit.jpg" sizes="48x48" type="image/jpg">
+</head>
+<body>
+<div class="login-container">
+    <h1>Signup</h1>
+    <hr>
+    <form action="/signup" method="POST">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Type Username" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Type Email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Type Password" required>
+        </div>
+        <div class="form-group">
+            <label for="cpassword">Confirm Password</label>
+            <input type="password" id="cpassword" name="cpassword" placeholder="Confirm Password" required>
+        </div>
+        <button type="submit">Signup</button>
+    </form>
+    <br>
+    <p>Already have an account? <a href="/login">Login</a></p>
+</div>
+</body>
+</html>
