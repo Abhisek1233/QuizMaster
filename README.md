@@ -14,3 +14,4 @@ Backend: Node.js with Express.js
 Frontend: EJS templating and CSS
 Database: MySQL (or your preferred database)
 Version Control: Git & GitHub
+![image](https://github.com/user-attachments/assets/707f91ee-01d2-4d14-b8b8-a804b3b32012)
