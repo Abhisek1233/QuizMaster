@@ -16,5 +16,8 @@
     "express": "^4.21.0",
     "express-session": "^1.18.0",
     "mysql2": "^3.11.2"
+  },
+  "engines": {
+    "node": ">=16.x <=18.x"
   }
 }
