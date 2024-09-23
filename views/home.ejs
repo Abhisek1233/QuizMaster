@@ -47,6 +47,11 @@
             </div>
         </form>
         <div id="message" style="display: none; text-align: center; font-size: 18px; color: green; margin-top: 20px;"></div>
+        <div id="scoreSection" style="display: none; text-align: center; margin-top: 20px;">
+            <button type="button" onclick="showScore()">Show Score</button>
+            <button type="button" onclick="evaluateAnswers()">Evaluate Answers</button>
+            <button type="button" onclick="goBack()">Back to Home</button>
+        </div>
     </section>
 
     <footer>
@@ -56,42 +61,39 @@
     <script>
         const quizQuestions = {
             "C Programming Quiz": [
-                { question: "Who is the father of C language?", options: ["Steve Jobs", "James Gosling", "Dennis Ritchie", "Rasmus Lerdorf"] },
-                { question: "Which of the following is not a valid C variable name?", options: ["int number;", "float rate;", "int variable_count;", "int $main;"] },
-                { question: "All keywords in C are in ____________", options: ["LowerCase letters", "UpperCase letters", "CamelCase letters", "None of the mentioned"] },
-                { question: "Which of the following is true for variable names in C?", options: ["They can contain alphanumeric characters as well as special characters", "It is not an error to declare a variable to be one of the keywords(like goto, static)", "Variable names cannot start with a digit", "Variable can be of any length"] },
-                { question: "Which is valid C expression?", options: ["int my_num = 100,000;", "int my_num = 100000;", "int my num = 1000;", "int $my_num = 10000;"] },
-                { question: "Which of the following cannot be a variable name in C?", options: ["volatile", "true", "friend", "export"] }
-            ],
-            "Python Programming Quiz": [
-                { question: "What will be the output of the following Python code? elements = [0, 1, 2] def incr(x): return x+1 print(list(map(elements, incr)))", options: ["[1, 2, 3]", "[0, 1, 2]", "error", "none of the mentioned"] },
-                { question: "What will be the output of the following Python code? elements = [0, 1, 2] def incr(x): return x+1 print(list(map(incr, elements)))", options: ["[1, 2, 3]", "[0, 1, 2]", "error", "none of the mentioned"] },
-                { question: "What will be the output of the following Python code? x = ['ab', 'cd'] print(list(map(upper, x)))", options: ["[‘AB’, ‘CD’]", "[‘ab’, ‘cd’]", "error", "none of the mentioned"] },
-                { question: "What will be the output of the following Python code? def to_upper(k): return k.upper() x = ['ab', 'cd'] print(list(map(upper, x)))", options: ["[‘AB’, ‘CD’]", "[‘ab’, ‘cd’]", "none of the mentioned", "error"] },
-                { question: "What will be the output of the following Python code? def to_upper(k): return k.upper() x = ['ab', 'cd'] print(list(map(to_upper, x)))", options: ["[‘AB’, ‘CD’]", "[‘ab’, ‘cd’]", "none of the mentioned", "error"] },
-                { question: "What will be the output of the following Python code? def to_upper(k): k.upper() x = ['ab', 'cd'] print(list(map(to_upper, x)))", options: ["[‘AB’, ‘CD’]", "[‘ab’, ‘cd’]", "none of the mentioned", "error"] }
-            ],
-            "Java Programming Quiz": [
-                { question: "Which one of the following is not an access modifier?", options: ["Public", "Private", "Protected", "Void"] },
-                { question: "All the variables of class should be ideally declared as?", options: ["private", "public", "protected", "default"] },
-                { question: "Which of the following modifier means a particular variable cannot be accessed within the package?", options: ["private", "public", "protected", "default"] },
-                { question: "How can a protected modifier be accessed?", options: ["accessible only within the class", "accessible only within package", "accessible within package and outside the package but through inheritance only", "accessible by all"] },
-                { question: "What happens if constructor of class A is made private?", options: ["Any class can instantiate objects of class A", "Objects of class A can be instantiated only within the class where it is declared", "Inherited class can instantiate objects of class A", "classes within the same package as class A can instantiate objects of class A"] },
-                { question: "All the variables of interface should be?", options: ["default and final", "default and static", "public, static and final", "protect, static and final"] }
+                { question: "Who is the father of C language?", options: ["Steve Jobs", "James Gosling", "Dennis Ritchie", "Rasmus Lerdorf"], correctAnswer: "Dennis Ritchie" },
+                { question: "Which of the following is not a valid C variable name?", options: ["int number;", "float rate;", "int variable_count;", "int $main;"], correctAnswer: "int $main;" },
+                { question: "All keywords in C are in ____________", options: ["LowerCase letters", "UpperCase letters", "CamelCase letters", "None of the mentioned"], correctAnswer: "LowerCase letters" },
+                { question: "Which of the following is true for variable names in C?", options: ["They can contain alphanumeric characters as well as special characters", "It is not an error to declare a variable to be one of the keywords(like goto, static)", "Variable names cannot start with a digit", "Variable can be of any length"], correctAnswer: "Variable names cannot start with a digit" },
+                { question: "Which is valid C expression?", options: ["int my_num = 100,000;", "int my_num = 100000;", "int my num = 1000;", "int $my_num = 10000;"], correctAnswer: "int my_num = 100000;" }
             ],
             "C++ Programming Quiz": [
-                { question: "Which of the following is not a keyword in C++?", options: ["class", "interface", "goto", "enum"] },
-                { question: "Which of the following is used to define a function?", options: ["return", "void", "function", "define"] },
-                { question: "In C++ a constructor function is a special function that is automatically called when an object is created. What type of function is a constructor?", options: ["A member function", "A static function", "A non-static function", "None of the above"] },
-                { question: "What is the default access specifier for a member of a class in C++?", options: ["private", "public", "protected", "None of the above"] },
-                { question: "What is the size of `char` data type in C++?", options: ["1 byte", "2 bytes", "4 bytes", "8 bytes"] },
-                { question: "Which operator is used to allocate memory dynamically in C++?", options: ["new", "malloc", "calloc", "alloc"] }
+                { question: "Who invented C++?", options: ["Dennis Ritchie", "Ken Thompson", "Brian Kernighan", "Bjarne Stroustrup"], correctAnswer: "Bjarne Stroustrup" },
+                { question: "What is C++?", options: ["C++ is an object oriented programming language", "C++ is a procedural programming language", "C++ supports both procedural and object oriented programming language", "C++ is a functional programming language"], correctAnswer: "C++ supports both procedural and object oriented programming language" },
+                { question: "Which of the following is the correct syntax of including a user defined header files in C++?", options: ["#include [userdefined]", "#include “userdefined”", "#include <userdefined.h>", "#include <userdefined>"], correctAnswer: "#include “userdefined”" },
+                { question: "Which of the following is used for comments in C++?", options: ["/* comment */", "// comment */", "// comment", "both // comment or /* comment */"], correctAnswer: "both // comment or /* comment */" },
+                { question: "Which of the following extension is used for user-defined header file in C++?", options: ["hg", "cpp", "h", "hf"], correctAnswer: "h" }
+            ],
+            "Java Programming Quiz": [
+                { question: "Who is the father of Java?", options: ["James Gosling", "Dennis Ritchie", "Bjarne Stroustrup", "Ken Thompson"], correctAnswer: "James Gosling" },
+                { question: "Which of the following is not a feature of Java?", options: ["Object Oriented", "Use of pointers", "Portable", "Dynamic and Extensible"], correctAnswer: "Use of pointers" },
+                { question: "Which component is used to compile, debug and execute Java programs?", options: ["JRE", "JIT", "JDK", "JVM"], correctAnswer: "JDK" },
+                { question: "Which of these cannot be used for a variable name in Java?", options: ["identifier & keyword", "identifier", "keyword", "none of the mentioned"], correctAnswer: "keyword" },
+                { question: "Which environment variable is used to set the Java path?", options: ["MAVEN_Path", "JavaPATH", "JAVA", "JAVA_HOME"], correctAnswer: "JAVA_HOME" }
+            ],
+            "Python Programming Quiz": [
+                { question: "Who developed Python Programming Language?", options: ["Wick van Rossum", "Rasmus Lerdorf", "Guido van Rossum", "Niene Stom"], correctAnswer: "Guido van Rossum" },
+                { question: "Which type of Programming does Python support?", options: ["object-oriented programming", "structured programming", "functional programming", "all of the mentioned"], correctAnswer: "all of the mentioned" },
+                { question: "Is Python case sensitive when dealing with identifiers?", options: ["no", "yes", "machine dependent", "none of the mentioned"], correctAnswer: "yes" },
+                { question: "Which of the following is the correct extension of the Python file?", options: [".python", ".pl", ".py", ".p"], correctAnswer: ".py" },
+                { question: "What is the maximum possible length of an identifier in Python?", options: ["79 characters", "31 characters", "63 characters", "none of the mentioned"], correctAnswer: "none of the mentioned" }
             ]
         };
 
         let currentSubject = null;
         let currentQuestionIndex = 0;
         let selectedAnswers = [];
+        let correctAnswers = [];
 
         function selectSubject(subject) {
             currentSubject = subject;
@@ -127,59 +129,132 @@
                 ).join('');
                 
                 subjectTitle.textContent = currentSubject;
-                quizContent.innerHTML = `
+                quizContent.innerHTML = ` 
                     <div class="quiz-question">
                         <p>${question.question}</p>
                         ${optionsHtml}
                     </div>
                 `;
 
-                prevButton.style.display = currentQuestionIndex > 0 ? 'block' : 'none';
-                nextButton.style.display = currentQuestionIndex < questions.length - 1 ? 'block' : 'none';
-                submitButton.style.display = currentQuestionIndex === questions.length - 1 ? 'block' : 'none';
-            } else {
-                prevButton.style.display = 'none';
-                nextButton.style.display = 'none';
-                submitButton.style.display = 'none';
+                prevButton.style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
+                nextButton.style.display = currentQuestionIndex < questions.length - 1 ? 'inline-block' : 'none';
+                submitButton.style.display = currentQuestionIndex === questions.length - 1 ? 'inline-block' : 'none';
             }
         }
 
         function showNextQuestion() {
-            const selectedOption = document.querySelector(`input[name="question${currentQuestionIndex}"]:checked`);
-            if (selectedOption) {
-                selectedAnswers[currentQuestionIndex] = selectedOption.value;
+            saveSelectedAnswer();
+            if (currentQuestionIndex < quizQuestions[currentSubject].length - 1) {
                 currentQuestionIndex++;
                 displayQuestion();
             }
         }
 
         function showPreviousQuestion() {
+            saveSelectedAnswer();
             if (currentQuestionIndex > 0) {
                 currentQuestionIndex--;
                 displayQuestion();
             }
         }
 
-        function handleSubmit() {
-            // Prevent the default form submission
-            event.preventDefault();
-
-            // Show the success message
-            const messageDiv = document.getElementById('message');
-            messageDiv.textContent = 'Successfully submitted!';
-            messageDiv.style.display = 'block';
-
-            // Hide the form (optional)
-            const quizForm = document.getElementById('quizForm');
-            quizForm.style.display = 'none';
-
-            return false; // Prevent the form from actually submitting
+        function saveSelectedAnswer() {
+            const questionRadios = document.getElementsByName(`question${currentQuestionIndex}`);
+            let selectedAnswer = '';
+            for (let radio of questionRadios) {
+                if (radio.checked) {
+                    selectedAnswer = radio.value;
+                    break;
+                }
+            }
+            selectedAnswers[currentQuestionIndex] = selectedAnswer;
         }
 
-        // Initial state
-        document.getElementById('prevButton').style.display = 'none';
-        document.getElementById('nextButton').style.display = 'none';
-        document.getElementById('submitButton').style.display = 'none';
+        function handleSubmit() {
+            saveSelectedAnswer();
+
+            const questions = quizQuestions[currentSubject];
+            correctAnswers = questions.map(q => q.correctAnswer);
+
+            const message = document.getElementById('message');
+            message.textContent = 'Successfully Submitted!';
+            message.style.display = 'block';
+
+            document.getElementById('quizForm').style.display = 'none';
+            document.getElementById('prevButton').style.display = 'none';
+            document.getElementById('nextButton').style.display = 'none';
+            document.getElementById('submitButton').style.display = 'none';
+            document.getElementById('scoreSection').style.display = 'block';
+
+            return false; // Prevent the form from submitting the usual way
+        }
+
+        function showScore() {
+            let score = 0;
+            selectedAnswers.forEach((answer, index) => {
+                if (answer === correctAnswers[index]) score++;
+            });
+            alert('Your Score: ' + score + '/' + correctAnswers.length);
+        }
+
+        function evaluateAnswers() {
+            let evaluation = '';
+            selectedAnswers.forEach((answer, index) => {
+                evaluation += `Q${index + 1}: ${answer === correctAnswers[index] ? 'Correct' : 'Wrong'}\n`;
+            });
+            alert(evaluation);
+        }
+
+        function goBack() {
+            window.location.href = '/';
+        }
+
+
+        function handleSubmit() {
+    saveSelectedAnswer();
+
+    const questions = quizQuestions[currentSubject];
+    correctAnswers = questions.map(q => q.correctAnswer);
+
+    let score = 0;
+    selectedAnswers.forEach((answer, index) => {
+        if (answer === correctAnswers[index]) score++;
+    });
+
+    const message = document.getElementById('message');
+    message.textContent = 'Successfully Submitted!';
+    message.style.display = 'block';
+
+    document.getElementById('quizForm').style.display = 'none';
+    document.getElementById('prevButton').style.display = 'none';
+    document.getElementById('nextButton').style.display = 'none';
+    document.getElementById('submitButton').style.display = 'none';
+    document.getElementById('scoreSection').style.display = 'block';
+
+    // Send quiz results to the server
+    fetch('/submit-quiz', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            subject: currentSubject,
+            score: score,
+            totalQuestions: questions.length
+        })
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+    return false; // Prevent the form from submitting the usual way
+}
+
+
     </script>
 </body>
 </html>

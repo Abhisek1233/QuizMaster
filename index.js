@@ -1,7 +1,7 @@
 // Import necessary modules
 const express = require('express');
 const app = express();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const mysql = require('mysql2/promise');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -200,6 +200,31 @@ app.post('/update-password', async (req, res) => {
 });
 
 
+app.post('/submit-quiz', async (req, res) => {
+    if (!req.session.username) {
+        return res.redirect('/login');
+    }
+
+    const { subject, score, totalQuestions } = req.body;
+
+    // Get user_id based on session username
+    const [user] = await connection.query('SELECT id FROM users WHERE username = ?', [req.session.username]);
+    const userId = user.length > 0 ? user[0].id : null;
+
+    if (!userId) {
+        return res.status(400).send('User not found.');
+    }
+
+    try {
+        // Insert quiz results into the database
+        await connection.query('INSERT INTO quiz_results (user_id, subject, score, total_questions) VALUES (?, ?, ?, ?)', [userId, subject, score, totalQuestions]);
+
+        res.send('Quiz results submitted successfully!');
+    } catch (err) {
+        console.error('Error during quiz result insertion:', err);
+        res.status(500).send('An error occurred while submitting the quiz. Please try again later.');
+    }
+});
 
 
 
@@ -212,3 +237,7 @@ app.post('/update-password', async (req, res) => {
         console.error('Error during database connection setup:', err);
     }
 })();
+
+
+
+

@@ -168,6 +168,32 @@ nav a:hover {
 }
 
 
+/* Add styles for the message, score section, and buttons */
+#message {
+    font-size: 18px;
+    color: green;
+    margin-top: 20px;
+}
+
+#scoreSection {
+    margin-top: 20px;
+}
+
+.quiz-button {
+    margin: 5px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.quiz-button:hover {
+    background-color: #45a049;
+}
+
+
 /* Footer */
 footer {
     text-align: center;
