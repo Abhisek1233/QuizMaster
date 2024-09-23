@@ -204,3 +204,41 @@ footer {
     width: 100%;
     bottom: 0;
 }
+
+/* Styles for score, evaluate, and back buttons */
+.score-button {
+    background-color: #4CAF50; /* Green */
+}
+
+.evaluate-button {
+    background-color: #FFA500; /* Orange */
+}
+
+.back-button {
+    background-color: #FF6347; /* Tomato */
+}
+
+/* Common button styles */
+.score-button,
+.evaluate-button,
+.back-button {
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.score-button:hover {
+    background-color: #45a049; /* Darker green */
+}
+
+.evaluate-button:hover {
+    background-color: #ff8c00; /* Darker orange */
+}
+
+.back-button:hover {
+    background-color: #FF4500; /* Darker tomato */
+}
