@@ -1,7 +1,8 @@
 // Import necessary modules
 const express = require('express');
 const app = express();
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');  // Make sure this is bcryptjs and not bcrypt
+
 const mysql = require('mysql2/promise');
 const bodyParser = require('body-parser');
 const session = require('express-session');
