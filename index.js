@@ -29,7 +29,14 @@ const dbOptions = {
     database: process.env.DB_NAME,
 };
 
-const connection = mysql.createConnection(dbOptions);
+let connection;
+try {
+    connection = mysql.createConnection(dbOptions);
+} catch (err) {
+    console.error('Error connecting to MySQL:', err);
+}
+
+// Session store
 const sessionStore = new MySQLStore(dbOptions);
 
 // Session middleware
@@ -59,19 +66,21 @@ app.post('/signup', async (req, res) => {
     }
 
     try {
-        // Check if the username or email already exists
-        const [existingUser] = await connection.promise().query('SELECT username, email FROM users WHERE username = ? OR email = ?', [username, email]);
+        const [existingUser] = await connection.promise().query(
+            'SELECT username, email FROM users WHERE username = ? OR email = ?',
+            [username, email]
+        );
         if (existingUser.length > 0) {
             return res.send('Username or email already exists. Please choose a different one.');
         }
 
-        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Insert user into the database
-        await connection.promise().query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hashedPassword]);
+        await connection.promise().query(
+            'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
+            [username, email, hashedPassword]
+        );
 
-        // Redirect to login page after successful signup
         res.redirect('/login');
     } catch (err) {
         console.error('Error during signup:', err);
@@ -86,28 +95,28 @@ app.get('/login', (req, res) => {
 
 // POST route for login
 app.post('/login', async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, password } = req.body;
 
-    if (!username || !email || !password) {
-        return res.send('Username, email, and password are required');
+    if (!username || !password) {
+        return res.send('Username and password are required');
     }
 
     try {
-        // Find the user in the database
-        const [user] = await connection.promise().query('SELECT * FROM users WHERE username = ? AND email = ?', [username, email]);
+        const [user] = await connection.promise().query(
+            'SELECT * FROM users WHERE username = ?',
+            [username]
+        );
 
         if (user.length === 0) {
-            return res.send('Invalid username, email, or password');
+            return res.send('Invalid username or password');
         }
 
-        // Compare the provided password with the hashed password in the database
         const passwordMatch = await bcrypt.compare(password, user[0].password);
 
         if (!passwordMatch) {
-            return res.send('Invalid username, email, or password');
+            return res.send('Invalid username or password');
         }
 
-        // Set session and redirect to home page
         req.session.username = user[0].username;
         res.redirect('/home');
     } catch (err) {
@@ -122,7 +131,6 @@ app.get('/home', (req, res) => {
         return res.redirect('/login');
     }
 
-    // Pass the session username (applicantName) to the view
     res.render('home', { applicantName: req.session.username });
 });
 
@@ -147,14 +155,15 @@ app.post('/reset-password', async (req, res) => {
     }
 
     try {
-        // Check if the username and ID match a record in the database
-        const [user] = await connection.promise().query('SELECT * FROM users WHERE username = ? AND id = ?', [username, id]);
+        const [user] = await connection.promise().query(
+            'SELECT * FROM users WHERE username = ? AND id = ?',
+            [username, id]
+        );
 
         if (user.length === 0) {
             return res.send('Invalid username or ID');
         }
 
-        // Render the reset password form with email
         const email = user[0].email;
         res.render('reset-password', { username, email });
     } catch (err) {
@@ -165,21 +174,21 @@ app.post('/reset-password', async (req, res) => {
 
 // POST route to handle the password update
 app.post('/update-password', async (req, res) => {
-    const { username, email, newPassword, confirmPassword } = req.body;
+    const { username, newPassword, confirmPassword } = req.body;
 
     if (!newPassword || !confirmPassword || newPassword !== confirmPassword) {
         return res.send('Passwords do not match or are missing');
     }
 
     try {
-        // Hash the new password
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-        // Update the user's password in the database
-        await connection.promise().query('UPDATE users SET password = ? WHERE username = ?', [hashedPassword, username]);
+        await connection.promise().query(
+            'UPDATE users SET password = ? WHERE username = ?',
+            [hashedPassword, username]
+        );
 
-        // Render a success message
-        res.render('password-success');  // Make sure this view exists
+        res.render('password-success');
     } catch (err) {
         console.error('Error during password update:', err);
         res.status(500).send('An error occurred. Please try again later.');
@@ -194,8 +203,11 @@ app.post('/submit-quiz', async (req, res) => {
 
     const { subject, score, totalQuestions } = req.body;
 
-    // Get user_id based on session username
-    const [user] = await connection.promise().query('SELECT id FROM users WHERE username = ?', [req.session.username]);
+    const [user] = await connection.promise().query(
+        'SELECT id FROM users WHERE username = ?',
+        [req.session.username]
+    );
+
     const userId = user.length > 0 ? user[0].id : null;
 
     if (!userId) {
@@ -203,8 +215,10 @@ app.post('/submit-quiz', async (req, res) => {
     }
 
     try {
-        // Insert quiz results into the database
-        await connection.promise().query('INSERT INTO quiz_results (user_id, subject, score, total_questions) VALUES (?, ?, ?, ?)', [userId, subject, score, totalQuestions]);
+        await connection.promise().query(
+            'INSERT INTO quiz_results (user_id, subject, score, total_questions) VALUES (?, ?, ?, ?)',
+            [userId, subject, score, totalQuestions]
+        );
 
         res.send('Quiz results submitted successfully!');
     } catch (err) {
@@ -214,6 +228,6 @@ app.post('/submit-quiz', async (req, res) => {
 });
 
 // Start the server using the environment variable for port
-app.listen(port, () => {
+app.listen(3000, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
