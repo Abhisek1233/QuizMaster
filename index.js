@@ -32,8 +32,17 @@ const dbOptions = {
 let connection;
 try {
     connection = mysql.createConnection(dbOptions);
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to MySQL:', err);
+            process.exit(1); // Exit the process if the database connection fails
+        } else {
+            console.log('Connected to MySQL');
+        }
+    });
 } catch (err) {
-    console.error('Error connecting to MySQL:', err);
+    console.error('Error during MySQL connection setup:', err);
+    process.exit(1); // Exit the process if an error occurs during connection creation
 }
 
 // Session store
@@ -228,6 +237,6 @@ app.post('/submit-quiz', async (req, res) => {
 });
 
 // Start the server using the environment variable for port
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
