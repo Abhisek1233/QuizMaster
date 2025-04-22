@@ -1,4 +1,4 @@
-#QuizMaster
+## QuizMaster
 QuizMaster is a dynamic quiz application built using Express.js, EJS, and CSS. It allows users to create an account, log in, and participate in quizzes while securely managing their account credentials. The app features a password reset system and is designed to offer a user-friendly experience with a clean and modern interface.
 
 Features:
